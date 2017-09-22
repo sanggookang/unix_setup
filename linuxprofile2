@@ -18,14 +18,3 @@ fi
 
 # set PATH so it includes user's private bin directories
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-
-# cuda
-export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64\
-                       ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-
-# miniconda
-export PATH="${HOME}/miniconda3/bin:$PATH"
-
-# theano
-export CUDA_ROOT=/usr/local/cuda/bin

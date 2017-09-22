@@ -1,0 +1,7 @@
+[global]
+device = cuda
+floatX = float32
+
+[dnn]
+include_path = /usr/local/cuda-8.0/include
+library_path = /usr/local/cuda-8.0/lib64

@@ -1,6 +1,6 @@
 #!/bin/bash
 conda config --add channels conda-forge
-conda install numpy scipy mkl nose sphinx pygpu
+conda install -y numpy scipy mkl nose sphinx pygpu mkl-service
 pip install --no-deps git+https://github.com/Theano/Theano.git#egg=Theano
 cp /usr/local/deep_learning/.theanorc ~/.theanorc
 if [ ! -f ~/.keras/keras.json ]; then

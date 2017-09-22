@@ -1,6 +1,10 @@
 # Local Path
 export PATH=/usr/local/bin:$PATH
 
+#ls colors #Only for mac
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+
 #ls changes
 alias ls="ls -N --color=yes --group-directories-first"
 
@@ -8,7 +12,7 @@ alias ls="ls -N --color=yes --group-directories-first"
 eval `dircolors ~/.dir_colors`
 
 # added by Miniconda3 installer
-export PATH="${HOME}/miniconda3/bin:$PATH"
+export PATH="/Users/sanggoo/miniconda3/bin:$PATH"
 alias mkvirtualenv="conda create python=3.6 --name"
 alias mkvirtualenv2="conda create python=2.7 --name"
 alias mkvirtualenv3="conda create python=3.6 --name"

@@ -12,7 +12,7 @@ while read line ; do
     ## if variable is blank (meaning TEST_FILE line not found in CHECK_FILE)
     ## print 'false' and exit
     if [[ -z $X ]] ; then
-        echo "false"
+        echo 'false'
         exit
     fi
 
@@ -20,4 +20,4 @@ done < ${TEST_FILE}
 
 ## if script does not exit after going through each line in TEST_FILE,
 ## then script will print true
-echo "true"
+echo 'true'

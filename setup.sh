@@ -1,4 +1,5 @@
 #!/bin/bash
+BASESETUPDIR=$(dirname "$BASH_SOURCE")
 sudo ln -s profile ~/.zprofile
 sudo ln -s vimrc ~/.vimrc
 sudo ln -s dir_colors ~/.dir_colors

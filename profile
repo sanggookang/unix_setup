@@ -27,20 +27,6 @@ function reset_path(){
   unset OLDPATH
 }
 
-function brew(){
-  if [ $# -eq 0 ]; then
-    command brew
-    return
-  fi
-  if [ "$1" == "upgrade" ]; then
-    default_path
-    command brew "$@"
-    reset_path
-  else
-    command brew "$@"
-  fi
-}
-
 function virtualenv(){
   default_path
   command virtualenv "$@"
@@ -53,3 +39,8 @@ function conda2(){
   deactivate
 }
 
+if [ "$(uname)" == "Darwin" ]; then
+  source ${HOME}/.macprofile
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+  source ${HOME}/.linuxprofile
+fi

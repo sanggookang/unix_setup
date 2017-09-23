@@ -8,5 +8,8 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 bash Miniconda3.sh
 rm Miniconda3.sh
+conda create python=2.7 -y --name root2
+ln -s ~/miniconda3/envs/root2/bin/pip ~/miniconda3/bin/pip2
+ln -s ~/miniconda3/envs/root2/bin/python ~/miniconda3/bin/python2
 cd $DIR
 unset DIR

@@ -5,10 +5,14 @@ export PATH=/usr/local/bin:$PATH
 alias ls="ls -N --color=yes --group-directories-first"
 
 # custom dir colors
-eval `dircolors ~/.dir_colors`
+eval `dircolors ~/.dircolors`
 
 # Miniconda3 path
 export PATH="${HOME}/miniconda3/bin:$PATH"
+
+# GNU utils
+PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
 
 # mkvirtualenv
 alias mkvirtualenv="conda create python=3.6 --name"
@@ -34,16 +38,24 @@ function reset_path(){
   unset OLDPATH
 }
 
+# Brew function
+function brew(){
+  if [ $# -eq 0 ]; then
+    command brew
+    return
+  fi
+  if [ "$1" == "upgrade" ]; then
+    default_path
+    command brew "$@"
+    reset_path
+  else
+    command brew "$@"
+  fi
+}
+
 # Python virtualenv
 function virtualenv(){
   default_path
   command virtualenv "$@"
   reset_path
 }
-
-
-if [ "$(uname)" == "Darwin" ]; then
-  source ${HOME}/.macprofile
-elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-  source ${HOME}/.linuxprofile
-fi

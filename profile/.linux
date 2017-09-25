@@ -18,7 +18,7 @@ alias exitenv="source deactivate"
 function conda2(){
   workon root2
   conda "$@"
-  deactivate
+  exitenv
 }
 
 # Path functions

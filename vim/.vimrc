@@ -42,6 +42,9 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'tpope/vim-surround'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'ajh17/VimCompletesMe'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'nvie/vim-flake8'
 
 call vundle#end()  
 "-------------- PLUGINS END --------------------
@@ -107,3 +110,14 @@ endfunction
 if !empty(glob("./.vim_profile"))
   source ./.vim_profile
 endif
+
+"------- CODE FOLDING -----------
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za
+
+"-------- PYTHON PEP8 INDENTATION ------
+au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+

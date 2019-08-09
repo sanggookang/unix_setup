@@ -63,6 +63,7 @@ colorscheme solarized
 vnoremap \y y:call system("pbcopy", getreg("\""))<CR>
 vnoremap \p p:call system("pbpaste", getreg("\""))<CR>
 set ttymouse=sgr
+cmap w!! w !sudo tee > /dev/null %
 
 
 "---------NERD-TREE SETTINGS----------

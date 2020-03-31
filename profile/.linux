@@ -1,48 +1,31 @@
-# ls changes
-alias ls="ls -N --color=yes --group-directories-first"
+# Ctrl-U to backward kill line
+bindkey "^u" backward-kill-line
 
-# custom dir colors
-eval `dircolors ~/.dircolors`
-
-# Miniconda3 path
-export PATH="${HOME}/miniconda3/bin:$PATH"
-
-# mkvirtualenv
-alias mkvirtualenv="conda create python=3.6 --name"
-alias mkvirtualenv2="conda create python=2.7 --name"
-alias mkvirtualenv3="conda create python=3.6 --name"
-alias lsvirtualenv="conda env list"
-alias rmvirtualenv="conda env remove --name"
-alias workon="source activate"
-alias exitenv="source deactivate"
-function conda2(){
-  workon root2
-  conda "$@"
-  exitenv
+docker_clean() {
+  local name=$(basename "$PWD")
+  local dangling_images=("${(@f)$(sudo docker images -f "dangling=true" -q)}")
+  if [[ ! -z $(sudo docker ps -a | grep $name) ]]; then
+    echo removing outdated container
+    sudo docker rm $name
+  fi
+	if [[ ! -z $dangling_images ]]; then
+		echo removing outdated images
+    for image in $dangling_images
+    do
+      echo removing image: $image
+      sudo docker rmi $image
+    done
+	fi
 }
 
-# Path functions
-function default_path(){
-  OLDPATH=$PATH
-  export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-}
-function reset_path(){
-  export PATH=$OLDPATH
-  unset OLDPATH
+# Build Docker from folder
+docker_build() {
+  docker_clean
+	sudo docker build --rm -t $(basename "$PWD"):latest . 
 }
 
-# Python virtualenv
-function virtualenv(){
-  default_path
-  command virtualenv "$@"
-  reset_path
+# Run Docker from folder
+docker_run() {
+  docker_clean
+	sudo docker run --gpus all --name $(basename "$PWD") $(basename "$PWD"):latest
 }
-
-# Cuda
-export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64\
-                         ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-export CUDA_ROOT=/usr/local/cuda-8.0/bin${CUDA_ROOT:+:${CUDA_ROOT}}
-
-# VIM as default
-export VISUAL=vim

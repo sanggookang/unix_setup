@@ -5,47 +5,6 @@ autoload -Uz compinit && compinit
 zstyle ':completion:*:*:git:*' script /usr/local/share/zsh/site-functions/git-completion.bash
 fpath=(/usr/local/share/zsh/site-functions/git-completion.bash $fpath)
 
-# Ctrl U for backward kill
-bindkey \^U backward-kill-line
-
-# Clean Docker
-docker_clean() {
-  local name=$(basename "$PWD")
-  local dangling_images=("${(@f)$(docker images -f "dangling=true" -q)}")
-  if [[ ! -z $(docker ps -a | grep $name) ]]; then
-    echo removing outdated container
-    docker rm $name
-  fi
-	if [[ ! -z $dangling_images ]]; then
-		echo removing outdated images
-    for image in $dangling_images
-    do
-      echo removing image: $image
-      docker rmi $image
-    done
-	fi
-}
-
-# Build Docker from folder
-docker_build() {
-  local tag="latest"
-  if [[ ! -a $1 ]]; then
-    tag=$1
-  fi
-  docker_clean
-	docker build --rm -t $(basename "$PWD"):$tag . 
-}
-
-# Run Docker from folder
-docker_run() {
-  local tag="latest"
-  if [[ ! -z $1 ]]; then
-    tag=$1
-  fi
-  docker_clean
-	docker run --name $(basename "$PWD") $(basename "$PWD"):$tag
-}
-
 # For gettext
 # export PATH="/usr/local/opt/gettext/bin:$PATH"
 # For compilers to find gettext you may need to set:

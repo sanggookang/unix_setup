@@ -11,8 +11,8 @@ bindkey \^U backward-kill-line
 # Clean Docker
 docker_clean() {
   local name=$(basename "$PWD")
-  local dangling_images=("${(@f)$(sudo docker images -f "dangling=true" -q)}")
-  if [[ ! -z $(sudo docker ps -a | grep $name) ]]; then
+  local dangling_images=("${(@f)$(docker images -f "dangling=true" -q)}")
+  if [[ ! -z $(docker ps -a | grep $name) ]]; then
     echo removing outdated container
     docker rm $name
   fi
@@ -28,14 +28,22 @@ docker_clean() {
 
 # Build Docker from folder
 docker_build() {
+  local tag="latest"
+  if [[ ! -a $1 ]]; then
+    tag=$1
+  fi
   docker_clean
-	docker build --rm -t $(basename "$PWD"):latest . 
+	docker build --rm -t $(basename "$PWD"):$tag . 
 }
 
 # Run Docker from folder
 docker_run() {
+  local tag="latest"
+  if [[ ! -z $1 ]]; then
+    tag=$1
+  fi
   docker_clean
-	docker run --name $(basename "$PWD") $(basename "$PWD"):latest
+	docker run --name $(basename "$PWD") $(basename "$PWD"):$tag
 }
 
 # For gettext

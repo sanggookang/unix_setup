@@ -20,12 +20,20 @@ docker_clean() {
 
 # Build Docker from folder
 docker_build() {
+  local tag="latest"
+  if [[ ! -a $1 ]]; then
+    tag=$1
+  fi
   docker_clean
-	sudo docker build --rm -t $(basename "$PWD"):latest . 
+	sudo docker build --rm -t $(basename "$PWD"):"$tag" . 
 }
 
 # Run Docker from folder
 docker_run() {
+  local tag="latest"
+  if [[ ! -a $1 ]]; then
+    tag=$1
+  fi
   docker_clean
-	sudo docker run --gpus all --name $(basename "$PWD") $(basename "$PWD"):latest
+	sudo docker run --gpus all --name $(basename "$PWD") $(basename "$PWD"):"$tag"
 }

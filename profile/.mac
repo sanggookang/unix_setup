@@ -8,6 +8,36 @@ fpath=(/usr/local/share/zsh/site-functions/git-completion.bash $fpath)
 # Ctrl U for backward kill
 bindkey \^U backward-kill-line
 
+# Clean Docker
+docker_clean() {
+  local name=$(basename "$PWD")
+  local dangling_images=("${(@f)$(sudo docker images -f "dangling=true" -q)}")
+  if [[ ! -z $(sudo docker ps -a | grep $name) ]]; then
+    echo removing outdated container
+    docker rm $name
+  fi
+	if [[ ! -z $dangling_images ]]; then
+		echo removing outdated images
+    for image in $dangling_images
+    do
+      echo removing image: $image
+      docker rmi $image
+    done
+	fi
+}
+
+# Build Docker from folder
+docker_build() {
+  docker_clean
+	docker build --rm -t $(basename "$PWD"):latest . 
+}
+
+# Run Docker from folder
+docker_run() {
+  docker_clean
+	docker run --name $(basename "$PWD") $(basename "$PWD"):latest
+}
+
 # For gettext
 # export PATH="/usr/local/opt/gettext/bin:$PATH"
 # For compilers to find gettext you may need to set:

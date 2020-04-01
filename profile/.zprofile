@@ -1,3 +1,5 @@
+export TERM=xterm-256color
+
 # Ctrl-U to backward kill line
 bindkey "^u" backward-kill-line
 

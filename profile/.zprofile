@@ -37,3 +37,15 @@ docker_run() {
   docker_clean
 	sudo docker run --gpus all --name $(basename "$PWD") $(basename "$PWD"):"$tag"
 }
+
+ssh_tmux() {
+  if [[ -z $1 ]]; then
+    echo Need an ssh destination!
+    return
+  fi
+  if [[ ! -z $2 && $2=='-nd' ]]; then
+    ssh -t $1 'tmux a -t macbook || tmux new -s macbook'
+  else
+    ssh -t $1 'tmux a -d -t macbook || tmux new -s macbook'
+  fi
+}

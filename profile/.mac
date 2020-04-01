@@ -4,6 +4,7 @@ autoload -Uz compinit && compinit
 # Git Autocomplete
 zstyle ':completion:*:*:git:*' script /usr/local/share/zsh/site-functions/git-completion.bash
 fpath=(/usr/local/share/zsh/site-functions/git-completion.bash $fpath)
+RASPI="pi@192.168.1.66"
 
 # For gettext
 # export PATH="/usr/local/opt/gettext/bin:$PATH"

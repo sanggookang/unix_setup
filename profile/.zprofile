@@ -51,3 +51,5 @@ ssh_tmux() {
     ssh -t $1 'tmux a -d -t macbook || tmux new -s macbook'
   fi
 }
+
+export RASPI="pi@192.168.1.66"

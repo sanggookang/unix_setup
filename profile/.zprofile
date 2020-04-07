@@ -46,9 +46,9 @@ ssh_tmux() {
     return
   fi
   if [[ ! -z $2 && $2=='-nd' ]]; then
-    ssh -t $1 'tmux a -t macbook || tmux new -s macbook'
+    ssh -t $1 'tmux a -t sanggoo || tmux new -s sanggoo'
   else
-    ssh -t $1 'tmux a -d -t macbook || tmux new -s macbook'
+    ssh -t $1 'tmux a -d -t sanggoo || tmux new -s sanggoo'
   fi
 }
 

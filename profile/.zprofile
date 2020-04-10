@@ -23,21 +23,32 @@ docker_clean() {
 # Build Docker from folder
 docker_build() {
   local tag="latest"
-  if [[ ! -a $1 ]]; then
+  if [[ ! -z $1 ]]; then
+    echo tag: $1
     tag=$1
   fi
   docker_clean
-	sudo docker build --rm -t $(basename "$PWD"):"$tag" . 
+  cmd=(sudo docker build --rm -t $(basename $PWD):$tag)
+  cmd+=(.)
+  echo ${cmd[@]}
+  "${cmd[@]}"
 }
 
 # Run Docker from folder
 docker_run() {
   local tag="latest"
-  if [[ ! -a $1 ]]; then
+  if [[ ! -z $1 ]]; then
     tag=$1
   fi
   docker_clean
-	sudo docker run --gpus all --name $(basename "$PWD") $(basename "$PWD"):"$tag"
+  cmd=(sudo docker run --name $(basename $PWD))
+
+  if [[ $(type nvidia-smi &> /dev/null) ]]; then
+    COMMAND+=(--gpus all)
+  fi
+  cmd+=($(basename $PWD):$tag)
+  echo ${cmd[@]}
+  "${cmd[@]}"
 }
 
 ssh_tmux() {

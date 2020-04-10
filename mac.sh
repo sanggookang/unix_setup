@@ -10,10 +10,7 @@ xcode-select --install
 brew update && brew upgrade
 
 # Install vim
-brew install vim --with-python3 --with-override-system-vi
-
-# Install gnu utilities, git, and zsh
-brew install coreutils git zsh zsh-completions
+brew install vim git zsh
 
 # Set zsh to be default shell
 sudo echo "$(which zsh)" >> /etc/shells

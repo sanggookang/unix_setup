@@ -3,6 +3,9 @@ export TERM=xterm-256color
 # Ctrl-U to backward kill line
 bindkey "^u" backward-kill-line
 
+# Prevent zsh globbing characters
+unsetopt nomatch
+
 docker_clean() {
   local name=$(basename "$PWD")
   local dangling_images=("${(@f)$(sudo docker images -f "dangling=true" -q)}")

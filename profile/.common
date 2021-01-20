@@ -1,7 +1,3 @@
-export PATH=/home/pi/.local/bin:$PATH
-
-alias temp='/opt/vc/bin/vcgencmd measure_temp'
-
 docker_clean() {
   local name=$(basename "$PWD")
   local dangling_images=("${(@f)$(sudo docker images -f "dangling=true" -q)}")
